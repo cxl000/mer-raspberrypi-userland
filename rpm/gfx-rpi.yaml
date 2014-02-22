@@ -1,0 +1,201 @@
+Name: gfx-rpi
+Summary: VideoCore libraries for Raspberry Pi
+Version: 0.0.4
+Release: 1
+Group: System/Libraries
+License: Broadcom Proprietary
+URL: https://github.com/cxl000/mer-rapberrypi-userland/
+Sources:
+    - "%{name}-%{version}.tar.bz2"
+    - mer-arm-linux.cmake
+    - prebuilt.tar.bz2
+    - egl.pc
+    - glesv1_cm.pc
+    - glesv2.pc
+    - omxil.pc
+    - bcm_host.pc
+Patches:
+    - gfx-rpi-not-all-apps.patch
+Description: |
+    Broadcom VideoCore Linux libraries for Raspberry Pi
+    This package contains the common binaries and libraries.
+PkgBR:
+    - cmake
+Configure: cmake
+ConfigOptions:
+    - -DCMAKE_TOOLCHAIN_FILE=%{SOURCE1}
+    - -DENABLE_3D_TESTS:BOOL=ON
+    - -DALL_APPS:BOOL=ON
+Builder: make
+Files:
+    - "%doc %{_docdir}/LICENCE"
+#%{_bindir}/vcdbg
+    - "%{_bindir}/vcgencmd"
+#%{_bindir}/edidparser
+    - "%{_bindir}/vchiq_test"
+    - "%{_bindir}/tvservice"
+    - "%{_bindir}/raspistill"
+    - "%{_bindir}/raspivid"
+    - "%{_bindir}/raspiyuv"
+    - "%{_sbindir}/vcfiled"
+#%{_bindir}/mmal_vc_diag
+    - "%{_libdir}/libmmal.so"
+    - "%{_libdir}/libmmal_core.so"
+    - "%{_libdir}/libmmal_util.so"
+    - "%{_libdir}/libmmal_vc_client.so"
+    - "%{_libdir}/libWFC.so"
+    - "%{_libdir}/libOpenVG.so"
+    - "%{_libdir}/libvcos.so"
+    - "%{_libdir}/libvchiq_arm.so"
+#%{_libdir}/libdebug_sym.so
+    - "%{_libdir}/libbcm_host.so"
+    - "%{_libdir}/libkhrn_client.so"
+    - "%{_libdir}/libvcfiled_check.so"
+    - "%{_libdir}/libvchostif.so"
+    - "%{_libdir}/libvmcs_rpc_client.so"
+#    - "%{_initddir}/vcfiled"
+    - "%{_dataddir}/install/vcfiled"
+
+SubPackages:
+    - Name: devel
+      Group: Development/System
+      Summary: Common devel files for RaspberryPi Broadcom VideoCore
+      Description: |
+         Headers for common RaspberryPi Broadcom VideoCore.
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_includedir}/interface"
+         - "%{_includedir}/vcinclude"
+         - "%{_includedir}/VG"
+         - "%{_includedir}/WF"
+         - "%{_includedir}/bcm_host.h"
+
+    - Name: libOMXIL
+      Summary:    OMX IL for Broadcom VideoCore
+      Group:      Development/Libraries
+      Description: |
+         This package provides OMX IL library for Broadcom VideoCore
+      Provides:
+         - libOMXIL
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_libdir}/libopenmaxil.so"
+
+    - Name: libOMXIL-devel
+      Summary:    OMX IL development headers for Broadcom VideoCore
+      Group:      Development/Libraries
+      Requires:
+         -   "%{name}-libOMXIL = %{version}-%{release}"
+      Description: |
+         This package provides OMXIL headers for Broadcom VideoCore.
+      Provides:
+         - libOMXIL-devel
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_includedir}/IL/*.h"
+         - "%{_libdir}/pkgconfig/omxil.pc"
+
+    - Name: libEGL
+      Summary:    EGL for Broadcom VideoCore
+      Group:      Development/Libraries
+      Description: |
+         This package provides EGL library for Broadcom VideoCore
+      Provides:
+         - libEGL
+      Files:
+         - "%{_libdir}/libEGL.so*"
+
+    - Name: libEGL-devel
+      Summary:    EGL development headers for Broadcom VideoCore
+      Group:      Development/Libraries
+      Requires:
+         -   "%{name}-libEGL = %{version}-%{release}"
+      Description: |
+         This package provides EGL headers for Broadcom VideoCore.
+      Provides:
+         - libEGL-devel
+      Files:
+         - "%{_includedir}/KHR/*.h"
+         - "%{_includedir}/EGL/*.h"
+         - "%{_libdir}/pkgconfig/egl.pc"
+         - "%{_libdir}/pkgconfig/bcm_host.pc"
+
+    - Name: libGLESv1
+      Summary:    GLESv1 for Broadcom VideoCore
+      Group:      Development/Libraries
+      Description: |
+         This package provides OpenGL ES v1 libraries for Broadcom VideoCore.
+      Provides:
+               - libGLESv1
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_libdir}/libGLESv1_CM.so*"
+
+    - Name: libGLESv1-devel
+      Summary:    GLESv1 development headers for Broadcom VideoCore
+      Group:      Development/Libraries
+      Requires:
+         -   "%{name}-libGLESv1 = %{version}-%{release}"
+      Description: |
+         This package provides OpenGL ES v1 headers for Broadcom VideoCore.
+      Provides:
+         - libGLESv1-devel
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_includedir}/GLES/*.h"
+         - "%{_libdir}/pkgconfig/glesv1_cm.pc"
+
+    - Name: libGLESv2
+      Summary:    GLESv2 for Broadcom VideoCore
+      Group:      Development/Libraries
+      Description: |
+         This package provides OpenGL ES v2 libraries for Broadcom VideoCore.
+      Provides:
+         - libGLESv2
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_libdir}/libGLESv2.so*"
+
+    - Name: libGLESv2-devel
+      Summary:    GLESv2 development headers for Broadcom VideoCore
+      Group:      Development/Libraries
+      Requires:
+         -   "%{name}-libGLESv2 = %{version}-%{release}"
+      Description: |
+         This package provides OpenGL ES v2 headers for Broadcom VideoCore.
+      Provides:
+         - libGLESv2-devel
+      Files:
+         - "%doc %{_docdir}/LICENCE"
+         - "%{_includedir}/GLES2/*.h"
+         - "%{_libdir}/pkgconfig/glesv2.pc"
+
+    - Name: test
+      Summary:    Test programs for Broadcom VideoCore
+      Group:      Development/Tools
+      Description: |
+         This package provides test programs for Broadcom VideoCore.
+      Provides:
+         - libGLESv2
+      Files:
+         - "%{_bindir}/hello_audio.bin"
+         - "%{_bindir}/hello_dispmanx.bin"
+         - "%{_bindir}/hello_encode.bin"
+         - "%{_bindir}/hello_jpeg.bin"
+         - "%{_bindir}/hello_teapot.bin"
+         - "%{_bindir}/hello_tiger.bin"
+         - "%{_bindir}/hello_triangle.bin"
+         - "%{_bindir}/hello_triangle2.bin"
+         - "%{_bindir}/hello_video.bin"
+         - "%{_bindir}/hello_videocube.bin"
+         - "%{_bindir}/hello_world.bin"
+
+    - Name: examples
+      Summary:    Example source for Broadcom VideoCore test programs
+      Group:      Development/Libraries
+      Description: |
+         This package provides example source for Broadcom VideoCore test programs.
+      Provides:
+         - libGLESv2
+      Files:
+         - "%{_prefix}/src/hello_pi"

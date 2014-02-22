@@ -1,0 +1,28 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6345900..5b0be5c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,7 +4,7 @@ project(vmcs_host_apps)
+ 
+ set(BUILD_MMAL TRUE)
+ if (ALL_APPS)
+- set(BUILD_MMAL_APPS TRUE)
++ set(BUILD_MMAL_APPS FALSE)
+ else()
+  set(BUILD_MMAL_APPS FALSE)
+ endif()
+diff --git a/host_applications/linux/CMakeLists.txt b/host_applications/linux/CMakeLists.txt
+index ab1ba1a..8a31e1d 100644
+--- a/host_applications/linux/CMakeLists.txt
++++ b/host_applications/linux/CMakeLists.txt
+@@ -6,8 +6,8 @@ add_subdirectory(apps/tvservice)
+ add_subdirectory(apps/raspicam)
+ 
+ if(ALL_APPS)
+- add_subdirectory(apps/vcdbg)
+- add_subdirectory(apps/edid_parser)
++# add_subdirectory(apps/vcdbg)
++# add_subdirectory(apps/edid_parser)
+  add_subdirectory(apps/hello_pi)
+ endif()
+ 
